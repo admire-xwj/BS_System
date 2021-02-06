@@ -1,9 +1,8 @@
 package com.bs.bs_system.common;
 
-import lombok.Value;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -14,10 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PageController {
 
     /**
-     * 首页
+     * 通用页面跳转
+     *
+     * @param url
+     * @return
      */
-    @RequestMapping("/index")
-    public String indexPage() {
-        return "index";
+    @RequestMapping("/{url}")
+    public String page(@PathVariable("url") String url) {
+        return url;
     }
+
+
 }
