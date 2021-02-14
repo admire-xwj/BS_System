@@ -60,14 +60,15 @@
         </fieldset>
 
         <script type="text/html" id="toolbarDemo">
-            <!--            <div class="layui-btn-container">-->
-            <!--                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加</button>-->
-            <!--            </div>-->
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加</button>
+            </div>
         </script>
 
         <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
 
         <script type="text/html" id="currentTableBar">
+            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
             <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
         </script>
 
@@ -82,7 +83,7 @@
 
         table.render({
             elem: '#currentTableId',
-            url: '/system/qrySysUserInfo',
+            url: '/system/qrySysDeptInfo',
             toolbar: '#toolbarDemo',
             defaultToolbar: ['filter', 'exports', 'print', {
                 title: '提示',
@@ -93,15 +94,15 @@
             cols: [
                 [
                     {type: "checkbox", width: 50},
-                    {field: 'userId', width: 50, title: '用户ID', sort: true},
-                    {field: 'deptId', width: 80, title: '部门名称'},
-                    {field: 'userName', width: 150, title: '用户名', sort: true},
-                    {field: 'userType', width: 130, title: '用户类型'},
-                    {field: 'email', title: '用户邮箱', minWidth: 150},
-                    {field: 'phonenumber', width: 150, title: '手机号码', sort: true},
-                    {field: 'sex', width: 80, title: '性别', sort: true},
-                    {field: 'status', width: 80, title: '账号状态'},
-                    {field: 'loginDate', width: 135, title: '登录时间', sort: true},
+                    {field: 'deptId', width: 80, title: 'ID', sort: true, align: "center"},
+                    {field: 'deptName', width: 120, title: '部门名称', align: "center"},
+                    {field: 'parentDeptName', width: 120, title: '父级部门名称', align: "center"},
+                    {field: 'leader', width: 100, title: '负责人', align: "center"},
+                    {field: 'phone', width: 130, title: '联系电话', align: "center"},
+                    {field: 'email', title: '邮箱', minWidth: 150, align: "center"},
+                    {field: 'status', width: 80, title: '状态', align: "center"},
+                    {field: 'createBy', width: 120, title: '创建者', sort: true, align: "center"},
+                    {field: 'createTime', width: 150, title: '创建时间', align: "center"},
                     {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
                 ]
             ],
@@ -120,10 +121,8 @@
                 },
                 method: 'get',
                 where: { //设定异步数据接口的额外参数，任意设
-                    userName: $("#username").val(),
-                    sex: $("#sex").val(),
-                    deptId: $("#deptname").val(),
-                    userType: $("#usertype").val()
+                    deptName: $("#deptName").val(),
+                    status: $("#status").val(),
                 },
                 page: {
                     curr: 1 //重新从第 1 页开始
@@ -159,23 +158,30 @@
 
         table.on('tool(currentTableFilter)', function (obj) {
             var data = obj.data;
-            // if (obj.event === 'edit') {
-            //
-            //     var index = layer.open({
-            //         title: '编辑用户',
-            //         type: 2,
-            //         shade: 0.2,
-            //         maxmin: true,
-            //         shadeClose: true,
-            //         area: ['100%', '100%'],
-            //         content: '../page/table/edit.html',
-            //     });
-            //     $(window).on("resize", function () {
-            //         layer.full(index);
-            //     });
-            //     return false;
-            // } else
-            if (obj.event === 'delete') {
+            if (obj.event === 'edit') {
+                var index = layer.open({
+                    title: '编辑部门',
+                    type: 2,
+                    shade: 0.2,
+                    maxmin: true,
+                    shadeClose: true,
+                    area: ['100%', '100%'],
+                    content: 'editDept.html?deptId=' + data.deptId,
+                    success: function (layero, index) {
+                        let body = layer.getChildFrame('body', index);
+                        body.find("#deptId").val(data.deptId);
+                        body.find("#deptName").val(data.deptName);
+                        body.find("#parentDeptName").val(data.parentDeptName);
+                        body.find("#leader").val(data.leader);
+                        body.find("#phone").val(data.phone);
+                    }
+                });
+                $(window).on("resize", function () {
+                    console.log(index)
+                    layer.full(index);
+                });
+                return false;
+            } else if (obj.event === 'delete') {
                 layer.confirm('真的删除行么', function (index) {
                     $.ajax({
                         url: "/system/deleteSysuser", //接口

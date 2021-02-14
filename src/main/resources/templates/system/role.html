@@ -117,7 +117,6 @@
         table.on('tool(currentTableFilter)', function (obj) {
             var data = obj.data;
             if (obj.event === 'edit') {
-                $("#parentroleId").val(data.roleId)
                 var index = layer.open({
                     title: '编辑角色',
                     type: 2,

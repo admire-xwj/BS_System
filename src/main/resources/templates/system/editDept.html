@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>编辑角色</title>
+    <title>编辑部门</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -17,29 +17,41 @@
 <body>
 <form class="layui-form layuimini-form" name="form" id="form">
     <div class="layui-form-item">
-        <label class="layui-form-label">角色ID</label>
+        <label class="layui-form-label">部门ID</label>
         <div class="layui-input-block">
-            <input type="text" name="roleId" id="roleId" lay-verify="required" class="layui-input" readonly>
+            <input type="text" name="deptId" id="deptId" lay-verify="required" class="layui-input" readonly>
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label required">角色名称</label>
+        <label class="layui-form-label required">部门名称</label>
         <div class="layui-input-block">
-            <input type="text" name="roleName" id="roleName" lay-verify="required" lay-reqtext="角色名称不能为空"
-                   placeholder="请输入角色名称" class="layui-input"></div>
+            <input type="text" name="deptName" id="deptName" lay-verify="required" lay-reqtext="部门名称不能为空"
+                   placeholder="请输入部门名称" class="layui-input"></div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label required">角色状态</label>
+        <label class="layui-form-label">父级部门名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="parentDeptName" id="parentDeptName"
+                   placeholder="请输入父级部门名称" class="layui-input"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">部门状态</label>
         <div class="layui-input-block">
             <input type="checkbox" class="layui-form-onswitch" name="status" id="status" lay-skin="switch"
                    lay-text="正常|停用">
         </div>
     </div>
-    <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">备注信息</label>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">负责人</label>
         <div class="layui-input-block">
-            <textarea name="remark" id="remark" class="layui-textarea" placeholder="请输入备注信息"></textarea>
-        </div>
+            <input type="text" name="leader" id="leader" lay-verify="required" lay-reqtext="负责人不能为空"
+                   placeholder="请输入负责人" class="layui-input"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">联系电话</label>
+        <div class="layui-input-block">
+            <input type="text" name="phone" id="phone" lay-verify="phone" lay-reqtext="联系电话不能为空"
+                   placeholder="请输入联系电话" class="layui-input"></div>
     </div>
 
     <div class="layui-form-item">
@@ -59,9 +71,9 @@
             $ = layui.$;
         //回显数据初始化
         $.ajax({
-            url: "/system/selectOneSysRole",
+            url: "/system/selectOneSysDept",
             type: "get",
-            data: {roleId: $.query.get("roleId")},
+            data: {deptId: $.query.get("deptId")},
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -76,11 +88,16 @@
             }
         });
 
+        // //数据提交验证
+        // form.verify({
+        //     phone: [/^1[3|4|5|7|8]\d{9}$/, '手机必须11位，只能是数字！']
+        // });
+
         //监听提交
         form.on('submit(saveBtn)', function (data) {
             console.log(data.field);
             $.ajax({
-                url: "/system/updateSysRoleInfo",
+                url: "/system/updateSysDeptInfo",
                 type: "post",
                 data: $("#form").serialize(),
                 // dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
@@ -93,7 +110,7 @@
                             parent.layer.close(iframeIndex);
                         })
                     } else {
-                        layer.msg(res.msg, {icon: 2})
+                        layer.msg(res.msg, {icon: 2,})
                     }
 
                 }
