@@ -7,26 +7,32 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * sys_menu
- * @author 
+ * sys_dept
+ *
+ * @author
  */
 @Data
-public class SysMenu implements Serializable {
+public class SysDept implements Serializable {
     /**
-     * 菜单ID
+     * 部门id
      */
-    @TableId(value = "menu_id")
-    private Long menuId;
+    @TableId(value = "dept_id")
+    private Long deptId;
 
     /**
-     * 菜单名称
-     */
-    private String menuName;
-
-    /**
-     * 父菜单ID
+     * 父部门id
      */
     private Long parentId;
+
+    /**
+     * 祖级列表
+     */
+    private String ancestors;
+
+    /**
+     * 部门名称
+     */
+    private String deptName;
 
     /**
      * 显示顺序
@@ -34,19 +40,29 @@ public class SysMenu implements Serializable {
     private Integer orderNum;
 
     /**
-     * 请求地址
+     * 负责人
      */
-    private String url;
+    private String leader;
 
     /**
-     * 属性
+     * 联系电话
      */
-    private String target;
+    private String phone;
 
     /**
-     * 菜单图标
+     * 邮箱
      */
-    private String icon;
+    private String email;
+
+    /**
+     * 部门状态（0正常 1停用）
+     */
+    private String status;
+
+    /**
+     * 删除标志（0代表存在 2代表删除）
+     */
+    private String delFlag;
 
     /**
      * 创建者
@@ -67,11 +83,6 @@ public class SysMenu implements Serializable {
      * 更新时间
      */
     private Date updateTime;
-
-    /**
-     * 备注
-     */
-    private String remark;
 
     private static final long serialVersionUID = 1L;
 }

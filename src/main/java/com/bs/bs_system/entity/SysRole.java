@@ -2,51 +2,54 @@ package com.bs.bs_system.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * sys_menu
- * @author 
+ * sys_role
+ *
+ * @author
  */
 @Data
-public class SysMenu implements Serializable {
+@Accessors(chain = true)
+public class SysRole implements Serializable {
     /**
-     * 菜单ID
+     * 角色ID
      */
-    @TableId(value = "menu_id")
-    private Long menuId;
+    @TableId(value = "role_id")
+    private Long roleId;
 
     /**
-     * 菜单名称
+     * 角色名称
      */
-    private String menuName;
+    private String roleName;
 
     /**
-     * 父菜单ID
+     * 角色权限字符串
      */
-    private Long parentId;
+    private String roleKey;
 
     /**
      * 显示顺序
      */
-    private Integer orderNum;
+    private Integer roleSort;
 
     /**
-     * 请求地址
+     * 数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）
      */
-    private String url;
+    private String dataScope;
 
     /**
-     * 属性
+     * 角色状态（0正常 1停用）
      */
-    private String target;
+    private String status;
 
     /**
-     * 菜单图标
+     * 删除标志（0代表存在 2代表删除）
      */
-    private String icon;
+    private String delFlag;
 
     /**
      * 创建者

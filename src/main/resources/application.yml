@@ -10,13 +10,21 @@ spring:
   datasource:
     username: root
     password: root
-    url: jdbc:mysql://localhost:3306/system_database?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf-8
+    url: jdbc:mysql://localhost:3306/sys_database?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf-8
     driver-class-name: com.mysql.cj.jdbc.Driver
+  #热部署配置
+  devtools:
+    restart:
+      enabled: true  #设置开启热部署
+
 
 #mybatis-plus 打印日志 不需要手写sql 可查看把我们完成的sql
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.bs.bs_system.entity.*
 
 
 
