@@ -11,4 +11,8 @@ public interface SysRoleService {
     SysRole selectOneSysRole(String roleId);
 
     DataTableVo updateSysRoleInfo(HttpServletRequest request);
+
+    DataTableVo deleteSysRole(String roleId, String DelFlag);
+
+    DataTableVo recoverySysRole(String delFlag);
 }

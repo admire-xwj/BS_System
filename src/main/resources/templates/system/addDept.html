@@ -16,12 +16,7 @@
 </head>
 <body>
 <form class="layui-form layuimini-form" name="form" id="form">
-    <div class="layui-form-item">
-        <label class="layui-form-label">部门ID</label>
-        <div class="layui-input-block">
-            <input type="text" name="deptId" id="deptId" lay-verify="required" class="layui-input" readonly>
-        </div>
-    </div>
+
     <div class="layui-form-item">
         <label class="layui-form-label required">部门名称</label>
         <div class="layui-input-block">
@@ -29,16 +24,16 @@
                    placeholder="请输入部门名称" class="layui-input"></div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">父级部门名称</label>
+        <label class="layui-form-label required">父级部门名称</label>
         <div class="layui-input-block">
-            <input type="text" name="parentDeptName" id="parentDeptName"
-                   placeholder="请输入父级部门名称" class="layui-input"></div>
+            <input type="text" id="tree" lay-filter="tree" class="layui-input">
+        </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label required">部门状态</label>
         <div class="layui-input-block">
             <input type="checkbox" class="layui-form-onswitch" name="status" id="status" lay-skin="switch"
-                   lay-text="正常|停用">
+                   lay-text="正常|停用" checked>
         </div>
     </div>
     <div class="layui-form-item">
@@ -47,11 +42,19 @@
             <input type="text" name="leader" id="leader" lay-verify="required" lay-reqtext="负责人不能为空"
                    placeholder="请输入负责人" class="layui-input"></div>
     </div>
+
     <div class="layui-form-item">
         <label class="layui-form-label required">联系电话</label>
         <div class="layui-input-block">
             <input type="text" name="phone" id="phone" lay-verify="phone" lay-reqtext="联系电话不能为空"
                    placeholder="请输入联系电话" class="layui-input"></div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">邮箱</label>
+        <div class="layui-input-block">
+            <input type="text" name="email" id="email" lay-verify="email" lay-reqtext="邮箱不能为空"
+                   placeholder="请输入邮箱" class="layui-input"></div>
     </div>
 
     <div class="layui-form-item">
@@ -64,48 +67,65 @@
 <script src="../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
 <script src="../lib/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script>
 <script src="../lib/jquery-3.4.1/jquery.params.js" charset="utf-8"></script>
+<script src="../js/common.js" charset="utf-8"></script>
 <script>
-    layui.use(['form'], function () {
+
+    layui.use(['form', 'treeSelect'], function () {
         var form = layui.form,
             layer = layui.layer,
+            treeSelect = layui.treeSelect,
             $ = layui.$;
-        //回显数据初始化
-        $.ajax({
-            url: "/system/selectOneSysDept",
-            type: "get",
-            data: {deptId: $.query.get("deptId")},
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
-            success: function (res) {
-                if (res.status == "0") {
-                    $("#status").attr('checked', true);
-                } else {
-                    $("#status").attr('checked', false);
+
+        var deptId = "";
+        //部门树形回显
+        treeSelect.render({
+            elem: '#tree',
+            data: '/system/getTreeSelect',
+            type: 'post',
+            placeholder: '上级菜单',
+            search: true,
+            style: {
+                folder: {
+                    enable: true
+                },
+                line: {
+                    enable: true
                 }
-                form.render('checkbox');
+            },
+            // 点击回调
+            click: function (d) {
+                deptId = d.current.id;
+
+            },
+            // 加载完成后的回调函数
+            success: function (d) {
+//                 console.log(d);
+// //                选中节点，根据id筛选
+//                 treeSelect.checkNode('tree', 103);
+//                 console.log($('#tree').val());
+// //                获取zTree对象，可以调用zTree方法
+//                 var treeObj = treeSelect.zTree('tree');
+//                 console.log(treeObj);
+// //                刷新树结构
+                treeSelect.refresh('tree');
             }
         });
 
-        // //数据提交验证
-        // form.verify({
-        //     phone: [/^1[3|4|5|7|8]\d{9}$/, '手机必须11位，只能是数字！']
-        // });
 
         //监听提交
         form.on('submit(saveBtn)', function (data) {
-            console.log(data.field);
+            console.log(deptId);
             $.ajax({
-                url: "/system/updateSysDeptInfo",
+                url: "/system/insertSysDeptInfo",
                 type: "post",
-                data: $("#form").serialize(),
+                data: $("#form").serialize() + "&parentDeptId=" + deptId,
                 // dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
                 success: function (res) {
                     if (res.code == "0") {
                         var index = layer.msg(res.msg, {icon: 1, time: 1000}, function () {
                             // 关闭弹出层
                             layer.close(index);
+                            window.parent.location.reload();
                             var iframeIndex = parent.layer.getFrameIndex(window.name);
                             parent.layer.close(iframeIndex);
                         })
@@ -115,7 +135,6 @@
 
                 }
             });
-
             return false;
         });
 

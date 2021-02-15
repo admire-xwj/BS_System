@@ -134,22 +134,22 @@
         /**
          * toolbar监听事件
          */
-        // table.on('toolbar(currentTableFilter)', function (obj) {
-        //     if (obj.event === 'add') {  // 监听添加操作
-        //         var index = layer.open({
-        //             title: '添加用户',
-        //             type: 2,
-        //             shade: 0.2,
-        //             maxmin: true,
-        //             shadeClose: true,
-        //             area: ['100%', '100%'],
-        //             content: 'add.html',
-        //         });
-        //         $(window).on("resize", function () {
-        //             layer.full(index);
-        //         });
-        //     }
-        // });
+        table.on('toolbar(currentTableFilter)', function (obj) {
+            if (obj.event === 'add') {  // 监听添加操作
+                var index = layer.open({
+                    title: '添加部门',
+                    type: 2,
+                    shade: 0.2,
+                    maxmin: true,
+                    shadeClose: true,
+                    area: ['100%', '100%'],
+                    content: 'addDept.html',
+                });
+                $(window).on("resize", function () {
+                    layer.full(index);
+                });
+            }
+        });
 
         //监听表格复选框选择
         table.on('checkbox(currentTableFilter)', function (obj) {
@@ -159,6 +159,11 @@
         table.on('tool(currentTableFilter)', function (obj) {
             var data = obj.data;
             if (obj.event === 'edit') {
+                if (data.parentId == "0") {
+                    layer.msg("总公司部门信息不允许修改。", {icon: 0})
+                    return false;
+                }
+
                 var index = layer.open({
                     title: '编辑部门',
                     type: 2,
@@ -166,36 +171,30 @@
                     maxmin: true,
                     shadeClose: true,
                     area: ['100%', '100%'],
-                    content: 'editDept.html?deptId=' + data.deptId,
+                    content: 'editDept.html?deptId=' + data.deptId + "&parentId=" + data.parentId,
                     success: function (layero, index) {
                         let body = layer.getChildFrame('body', index);
                         body.find("#deptId").val(data.deptId);
                         body.find("#deptName").val(data.deptName);
-                        body.find("#parentDeptName").val(data.parentDeptName);
                         body.find("#leader").val(data.leader);
                         body.find("#phone").val(data.phone);
                     }
                 });
                 $(window).on("resize", function () {
-                    console.log(index)
                     layer.full(index);
                 });
                 return false;
             } else if (obj.event === 'delete') {
                 layer.confirm('真的删除行么', function (index) {
                     $.ajax({
-                        url: "/system/deleteSysuser", //接口
+                        url: "/system/deleteSysDept", //接口
                         type: "post", //GET或POST
-                        data: JSON.stringify({userId: "1"}), //数据
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+                        data: {deptId: data.deptId}, //数据
                         success: function (res) {
                             if (res.code == "0") {
-                                layer.msg(res.msg)
+                                layer.msg(res.msg, {icon: 1})
                             } else {
-                                layer.msg(res.msg)
+                                layer.msg(res.msg, {icon: 2})
                             }
                         } //回调成功方法
                         // error: function (xhr, textStatus) {

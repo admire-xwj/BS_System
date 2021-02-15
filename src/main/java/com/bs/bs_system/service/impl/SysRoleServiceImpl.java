@@ -34,6 +34,7 @@ public class SysRoleServiceImpl implements SysRoleService {
             if (!StringUtils.isEmpty(roleName)) {
                 qw.lambda().eq(SysRole::getRoleName, roleName);
             }
+            qw.lambda().eq(SysRole::getDelFlag, "0");
             IPage<SysRole> page = new Page<>(1, limit);
             IPage<SysRole> sysRoleIPage = sysRoleMapper.selectPage(page, qw);
             List<SysRole> records = sysRoleIPage.getRecords();
@@ -102,6 +103,57 @@ public class SysRoleServiceImpl implements SysRoleService {
             dataTableVo.setCode("1");
             dataTableVo.setCount(0L);
             dataTableVo.setMsg("保存失败");
+            dataTableVo.setData(null);
+        }
+
+        return dataTableVo;
+    }
+
+    @Override
+    public DataTableVo deleteSysRole(String roleId, String DelFlag) {
+
+        DataTableVo dataTableVo = new DataTableVo();
+
+        SysRole sysRole = new SysRole();
+        sysRole.setRoleId(Long.parseLong(roleId));
+        sysRole.setDelFlag(DelFlag);
+        sysRole.setUpdateBy("admin");
+        String formatDateToString = DateUtils.formatDateToString(new Date(), "yyyy-MM-dd");
+        Date date = DateUtils.formatStringToDate(formatDateToString, "yyyy-MM-dd");
+        sysRole.setUpdateTime(date);
+        int row = sysRoleMapper.updateById(sysRole);
+        String msg = "删除成功";
+
+        if (row == 1) {
+            dataTableVo.setCode("0");
+            dataTableVo.setCount(0L);
+            dataTableVo.setMsg(msg);
+            dataTableVo.setData(null);
+        } else {
+            dataTableVo.setCode("1");
+            dataTableVo.setCount(0L);
+            dataTableVo.setMsg("删除失败");
+            dataTableVo.setData(null);
+        }
+
+        return dataTableVo;
+    }
+
+    @Override
+    public DataTableVo recoverySysRole(String delFlag) {
+        DataTableVo dataTableVo = new DataTableVo();
+
+        int row = sysRoleMapper.updateAll(delFlag);
+
+        if (row != 0) {
+            dataTableVo.setCode("0");
+            dataTableVo.setCount(0L);
+            dataTableVo.setMsg("角色信息恢复成功");
+            dataTableVo.setData(null);
+        } else {
+            dataTableVo.setCode("1");
+            dataTableVo.setCount(0L);
+            dataTableVo.setMsg("角色信息恢复失败");
             dataTableVo.setData(null);
         }
 

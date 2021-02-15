@@ -89,6 +89,7 @@
                         var index = layer.msg(res.msg, {icon: 1, time: 1000}, function () {
                             // 关闭弹出层
                             layer.close(index);
+                            window.parent.location.reload();
                             var iframeIndex = parent.layer.getFrameIndex(window.name);
                             parent.layer.close(iframeIndex);
                         })

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -44,6 +45,44 @@ public class SysDeptController {
     public DataTableVo updateSysDeptInfo(HttpServletRequest request) {
         log.info("更新部门信息开始");
         DataTableVo dataTableVo = sysDeptService.updateSysDeptInfo(request);
+        return dataTableVo;
+    }
+
+    /**
+     * 查询部门组件
+     *
+     * @param parentId
+     * @return
+     */
+    @RequestMapping("/getTreeSelect")
+    public List<Map<String, Object>> getTreeSelect(Long parentId) {
+        log.info("查询部门组件开始");
+        List<Map<String, Object>> treeSelectList = sysDeptService.getTreeSelect(0L);
+        return treeSelectList;
+
+    }
+
+    /**
+     * 添加部门
+     *
+     * @param request
+     * @return
+     */
+    @RequestMapping("/insertSysDeptInfo")
+    public DataTableVo insertSysDeptInfo(HttpServletRequest request) {
+        log.info("添加部门开始");
+        DataTableVo dataTableVo = sysDeptService.insertSysDeptInfo(request);
+        return dataTableVo;
+    }
+
+    /**
+     * @param deptId
+     * @return
+     */
+    @RequestMapping("/deleteSysDept")
+    public DataTableVo deleteSysDept(String deptId) {
+        log.info("删除部门开始");
+        DataTableVo dataTableVo = sysDeptService.deleteSysDept(deptId);
         return dataTableVo;
     }
 }

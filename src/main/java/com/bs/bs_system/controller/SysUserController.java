@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 /**
  * 用户管理
  */
@@ -25,9 +27,9 @@ public class SysUserController {
      * @return
      */
     @RequestMapping("/qrySysUserInfo")
-    public DataTableVo<SysUser> qrySysUserInfo(Long limit, String userName, String sex, String deptId, String userType) {
+    public DataTableVo<Map> qrySysUserInfo(Long limit, String userName, String sex, String deptId, String userType) {
         log.info("用户管理查询开始" + limit + userName + sex);
-        DataTableVo<SysUser> dataTableVo = sysUserService.qrySysUserInfo(limit, userName, sex, deptId, userType);
+        DataTableVo<Map> dataTableVo = sysUserService.qrySysUserInfo(limit, userName, sex, deptId, userType);
         return dataTableVo;
     }
 

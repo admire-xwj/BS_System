@@ -65,4 +65,31 @@ public class SysRoleController {
         DataTableVo dataTableVo = sysRoleService.updateSysRoleInfo(request);
         return dataTableVo;
     }
+
+    /**
+     * 删除角色信息
+     *
+     * @param roleId
+     * @param DelFlag
+     * @return
+     */
+    @RequestMapping("/deleteSysRole")
+    public DataTableVo deleteSysRole(String roleId, String DelFlag) {
+        log.info("删除角色信息开始");
+        DataTableVo dataTableVo = sysRoleService.deleteSysRole(roleId, DelFlag);
+        return dataTableVo;
+    }
+
+    /**
+     * 恢复所有角色信息
+     *
+     * @param delFlag
+     * @return
+     */
+    @RequestMapping("/recoverySysRole")
+    public DataTableVo recoverySysRole(String delFlag) {
+        log.info("恢复角色信息开始");
+        DataTableVo dataTableVo = sysRoleService.recoverySysRole(delFlag);
+        return dataTableVo;
+    }
 }

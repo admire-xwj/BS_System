@@ -36,6 +36,13 @@
         from sys_user
         where user_id = #{userId,jdbcType=VARCHAR}
     </select>
+    <select id="selectRoleInfo" resultType="java.util.Map">
+        SELECT *
+        FROM sys_role
+        WHERE role_id = (SELECT a.role_id
+                         FROM sys_user_role a
+                         WHERE a.user_id = #{userId})
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
         delete
         from sys_user

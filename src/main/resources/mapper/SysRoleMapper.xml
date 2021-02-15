@@ -153,17 +153,24 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.bs.bs_system.entity.SysRole">
     update sys_role
-    set role_name = #{roleName,jdbcType=VARCHAR},
-      role_key = #{roleKey,jdbcType=VARCHAR},
-      role_sort = #{roleSort,jdbcType=INTEGER},
-      data_scope = #{dataScope,jdbcType=CHAR},
-      `status` = #{status,jdbcType=CHAR},
-      del_flag = #{delFlag,jdbcType=CHAR},
-      create_by = #{createBy,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_by = #{updateBy,jdbcType=VARCHAR},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      remark = #{remark,jdbcType=VARCHAR}
+    set role_name   = #{roleName,jdbcType=VARCHAR},
+        role_key    = #{roleKey,jdbcType=VARCHAR},
+        role_sort   = #{roleSort,jdbcType=INTEGER},
+        data_scope  = #{dataScope,jdbcType=CHAR},
+        `status`    = #{status,jdbcType=CHAR},
+        del_flag    = #{delFlag,jdbcType=CHAR},
+        create_by   = #{createBy,jdbcType=VARCHAR},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        update_by   = #{updateBy,jdbcType=VARCHAR},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        remark      = #{remark,jdbcType=VARCHAR}
     where role_id = #{roleId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateAll">
+    update sys_role
+    set del_flag    = #{delFlag},
+        update_by   = 'admin',
+        update_time = DATE_FORMAT(NOW(), '%Y-%m-%d')
   </update>
 </mapper>
