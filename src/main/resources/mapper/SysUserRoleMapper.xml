@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bs.bs_system.mapper.SysUserRoleMapper">
+  <resultMap id="BaseResultMap" type="com.bs.bs_system.entity.SysUserRoleKey">
+    <id column="user_id" jdbcType="BIGINT" property="userId" />
+    <id column="role_id" jdbcType="BIGINT" property="roleId" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="com.bs.bs_system.entity.SysUserRoleKey">
+    delete from sys_user_role
+    where user_id = #{userId,jdbcType=BIGINT}
+      and role_id = #{roleId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="user_id" keyProperty="userId" parameterType="com.bs.bs_system.entity.SysUserRoleKey" useGeneratedKeys="true">
+    insert into sys_user_role (role_id)
+    values (#{roleId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" keyColumn="user_id" keyProperty="userId" parameterType="com.bs.bs_system.entity.SysUserRoleKey" useGeneratedKeys="true">
+    insert into sys_user_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        role_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        #{roleId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+</mapper>
