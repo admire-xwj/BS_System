@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>档案上传</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+
+        <fieldset class="table-search-fieldset">
+            <legend>档案上传</legend>
+            <div style="margin: 10px 10px 10px 10px">
+                <form class="layui-form " id="form" action="">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">部门名称:</label>
+                            <div class="layui-input-block">
+                                <input type="text" id="tree" lay-filter="tree" class="layui-input">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">档案类型:</label>
+                            <div class="layui-input-block">
+                                <select name="fileType" id="fileType" lay-verify="">
+                                    <option value=""></option>
+                                    <option value="0">劳务合同</option>
+                                    <option value="1">会议资料</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp注:</label>
+                        <div class="layui-input-block">
+                                    <textarea name="remark" id="remark" placeholder="请输入"
+                                              class="layui-textarea"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <div class="layui-inline"></div>
+                        <div class="layui-inline"></div>
+                        <div class="layui-inline"></div>
+
+                        <div class="layui-inline">
+                            <div class="layui-input-inline">
+                                <button type="button" class="layui-btn" id="chooseFile">
+                                    <i class="layui-icon">&#xe655;</i>选择文件
+                                </button>
+                            </div>
+                            <div class="layui-input-inline">
+                                <button type="button" class="layui-btn" id="upload">
+                                    <i class="layui-icon">&#xe67c;</i>档案上传
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </fieldset>
+
+    </div>
+</div>
+<script src="../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script src="../js/common.js" charset="utf-8"></script>
+
+<script>
+    layui.use(['form', 'table', 'treeSelect', 'upload'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            treeSelect = layui.treeSelect,
+            upload = layui.upload;
+
+
+        var deptId = "";
+
+        //部门树形回显
+        treeSelect.render({
+            elem: '#tree',
+            data: '/system/getTreeSelect',
+            type: 'post',
+            placeholder: '选择部门',
+            search: true,
+            style: {
+                folder: {
+                    enable: true
+                },
+                line: {
+                    enable: true
+                }
+            },
+            // 点击回调
+            click: function (d) {
+                deptId = d.current.id;
+            },
+            // 加载完成后的回调函数
+            success: function (d) {
+                treeSelect.refresh('tree');
+            }
+        });
+
+
+        upload.render({
+            elem: '#chooseFile',
+            url: '/system/fileUpload',
+            auto: false, //选择文件后不自动上传
+            data: {
+                deptId: function () {
+                    return deptId;
+                },
+                remark: function () {
+                    return $('#remark').val();
+                },
+                fileType: function () {
+                    return $('#fileType').val();
+                },
+
+            },
+            bindAction: '#upload',
+            done: function (res, index, upload) { //上传后的回调
+                if (res.code == "0") {
+                    layer.msg(res.msg, {icon: 1, time: 1000}, function () {
+                        location.reload();
+                    })
+                } else {
+                    layer.msg(res.msg, {icon: 2})
+                }
+            },
+            accept: 'file' //允许上传的文件类型
+            //,size: 50 //最大允许上传的文件大小
+            //,……
+        })
+
+
+    })
+</script>
+
+</body>
+</html>

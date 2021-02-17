@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>部门管理</title>
+    <title>档案管理</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -14,43 +14,49 @@
     <div class="layuimini-main">
 
         <fieldset class="table-search-fieldset">
-            <legend>搜索信息</legend>
+            <legend>查询信息</legend>
             <div style="margin: 10px 10px 10px 10px">
                 <form class="layui-form layui-form-pane" id="form" action="">
                     <div class="layui-form-item">
                         <div class="layui-inline">
                             <label class="layui-form-label">部门名称</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="deptName" id="deptName" autocomplete="off" class="layui-input">
+                                <input type="text" id="tree" lay-filter="tree" class="layui-input">
                             </div>
                         </div>
 
                         <!--占位-->
-                        <div class="layui-inline"></div>
-                        <div class="layui-inline"></div>
-                        <div class="layui-inline"></div>
                         <div class="layui-inline"></div>
 
                         <div class="layui-inline">
-                            <label class="layui-form-label">部门状态</label>
+                            <label class="layui-form-label">档案名称</label>
                             <div class="layui-input-inline">
-                                <select name="status" id="status" lay-verify="">
-                                    <option value=""></option>
-                                    <option value="0">正常</option>
-                                    <option value="1">停用</option>
-                                </select>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="fileName" id="fileName" autocomplete="off"
+                                           class="layui-input">
+                                </div>
                             </div>
                         </div>
                         <!--占位-->
                         <div class="layui-inline"></div>
-                        <div class="layui-inline"></div>
-                        <div class="layui-inline"></div>
-                        <div class="layui-inline"></div>
+
+                        <div class="layui-inline">
+                            <label class="layui-form-label">档案类型</label>
+                            <div class="layui-input-inline">
+                                <div class="layui-input-inline">
+                                    <select name="fileType" id="fileType" lay-verify="">
+                                        <option value=""></option>
+                                        <option value="0">劳务合同</option>
+                                        <option value="1">会议资料</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="layui-inline">
                             <div class="layui-input-inline">
                                 <button type="submit" id="searchbtn" class="layui-btn layui-btn-warm" lay-submit
-                                        lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索
+                                        lay-filter="data-search-btn"><i class="layui-icon"></i>档案查询
                                 </button>
                             </div>
                         </div>
@@ -61,29 +67,61 @@
 
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container">
-                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加</button>
+                <!--                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加</button>-->
             </div>
         </script>
 
         <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
 
         <script type="text/html" id="currentTableBar">
-            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-normal layui-btn-xs " lay-event="download">下载</a>
             <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
         </script>
 
     </div>
 </div>
 <script src="../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script src="../js/common.js" charset="utf-8"></script>
+
 <script>
-    layui.use(['form', 'table'], function () {
+    layui.use(['form', 'table', 'treeSelect'], function () {
         var $ = layui.jquery,
             form = layui.form,
+            treeSelect = layui.treeSelect,
             table = layui.table;
+
+        var deptId = "";
+
+        //部门树形回显
+        treeSelect.render({
+            elem: '#tree',
+            data: '/system/getTreeSelect',
+            type: 'post',
+            placeholder: '选择部门',
+            search: true,
+            style: {
+                folder: {
+                    enable: true
+                },
+                line: {
+                    enable: true
+                }
+            },
+            // 点击回调
+            click: function (d) {
+                deptId = d.current.id;
+
+            },
+            // 加载完成后的回调函数
+            success: function (d) {
+                treeSelect.refresh('tree');
+            }
+        });
+
 
         table.render({
             elem: '#currentTableId',
-            url: '/system/qrySysDeptInfo',
+            url: '/system/qrySysFileInfo',
             toolbar: '#toolbarDemo',
             defaultToolbar: ['filter', 'exports', 'print', {
                 title: '提示',
@@ -94,15 +132,14 @@
             cols: [
                 [
                     {type: "checkbox", width: 50},
-                    {field: 'deptId', width: 80, title: 'ID', sort: true, align: "center"},
-                    {field: 'deptName', width: 120, title: '部门名称', align: "center"},
-                    {field: 'parentDeptName', width: 120, title: '父级部门名称', align: "center"},
-                    {field: 'leader', width: 100, title: '负责人', align: "center"},
-                    {field: 'phone', width: 130, title: '联系电话', align: "center"},
-                    {field: 'email', title: '邮箱', minWidth: 150, align: "center"},
-                    {field: 'status', width: 80, title: '状态', align: "center"},
-                    {field: 'createBy', width: 120, title: '创建者', sort: true, align: "center"},
-                    {field: 'createTime', width: 150, title: '创建时间', align: "center"},
+                    {field: 'fileId', width: 80, title: '编号', sort: true, align: "center"},
+                    {field: 'fileName', width: 120, title: '档案名称', align: "center"},
+                    {field: 'deptName', width: 120, title: '所属部门', align: "center"},
+                    {field: 'fileUrl', width: 150, title: '文件路径', align: "center"},
+                    {field: 'fileType', width: 130, title: '档案类型', align: "center"},
+                    {field: 'createBy', title: '上传者', minWidth: 100, align: "center"},
+                    {field: 'createTime', width: 120, title: '上传时间', sort: true, align: "center"},
+                    {field: 'remark', width: 120, title: '备注', align: "center"},
                     {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
                 ]
             ],
@@ -121,8 +158,9 @@
                 },
                 method: 'get',
                 where: { //设定异步数据接口的额外参数，任意设
-                    deptName: $("#deptName").val(),
-                    status: $("#status").val(),
+                    deptId: deptId,
+                    fileName: $("#fileName").val(),
+                    fileType: $("#fileType").val(),
                 },
                 page: {
                     curr: 1 //重新从第 1 页开始
@@ -131,25 +169,6 @@
             return false;
         });
 
-        /**
-         * toolbar监听事件
-         */
-        table.on('toolbar(currentTableFilter)', function (obj) {
-            if (obj.event === 'add') {  // 监听添加操作
-                var index = layer.open({
-                    title: '添加部门',
-                    type: 2,
-                    shade: 0.2,
-                    maxmin: true,
-                    shadeClose: true,
-                    area: ['100%', '100%'],
-                    content: 'addDept.html',
-                });
-                $(window).on("resize", function () {
-                    layer.full(index);
-                });
-            }
-        });
 
         //监听表格复选框选择
         table.on('checkbox(currentTableFilter)', function (obj) {
@@ -158,27 +177,16 @@
 
         table.on('tool(currentTableFilter)', function (obj) {
             var data = obj.data;
-            if (obj.event === 'edit') {
-                if (data.parentId == "0") {
-                    layer.msg("总公司部门信息不允许修改。", {icon: 0})
-                    return false;
-                }
-
-                var index = layer.open({
-                    title: '编辑部门',
+            if (obj.event === 'download') {
+                var index = layer.href({
+                    title: '下载文件',
                     type: 2,
                     shade: 0.2,
                     maxmin: true,
                     shadeClose: true,
                     area: ['100%', '100%'],
-                    content: 'editDept.html?deptId=' + data.deptId + "&parentId=" + data.parentId,
-                    success: function (layero, index) {
-                        let body = layer.getChildFrame('body', index);
-                        body.find("#deptId").val(data.deptId);
-                        body.find("#deptName").val(data.deptName);
-                        body.find("#leader").val(data.leader);
-                        body.find("#phone").val(data.phone);
-                    }
+                    content: 'E:\\IDEA\\IDEA_Work\\project3\\bs_system\\src\\main\\resources\\templates\\temp05-中意团险核心-任务调度计划清单.xlsx',
+
                 });
                 $(window).on("resize", function () {
                     layer.full(index);
@@ -187,9 +195,9 @@
             } else if (obj.event === 'delete') {
                 layer.confirm('真的删除行么', function (index) {
                     $.ajax({
-                        url: "/system/deleteSysDept", //接口
+                        url: "/system/deleteSysFile", //接口
                         type: "post", //GET或POST
-                        data: {deptId: data.deptId}, //数据
+                        data: {fileId: data.fileId}, //数据
                         success: function (res) {
                             if (res.code == "0") {
                                 layer.msg(res.msg, {icon: 1})

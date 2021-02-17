@@ -26,7 +26,7 @@ public class PageController {
 
     @RequestMapping("/system/{page}")
     public String systemPage(@PathVariable("page") String page) {
-        return "/system/" + page;
+        return "system/" + page;
     }
 
     @RequestMapping("/favicon.ico")

@@ -96,7 +96,7 @@
         form.on('submit(data-search-btn)', function (data) {
             table.reload('currentTableId', {
                 done: function (res, curr, count) {
-                    layer.msg(res.msg, {icon: 1});
+                    layer.msg(res.msg, {icon: 6});
                 },
                 method: 'get',
                 where: { //设定异步数据接口的额外参数，任意设
