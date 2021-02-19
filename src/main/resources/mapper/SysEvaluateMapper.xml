@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bs.bs_system.mapper.SysEvaluateMapper">
+  <resultMap id="BaseResultMap" type="com.bs.bs_system.entity.SysEvaluate">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="dept_evaluate" jdbcType="VARCHAR" property="deptEvaluate" />
+    <result column="conpany_evaluate" jdbcType="VARCHAR" property="conpanyEvaluate" />
+    <result column="self_evaluate" jdbcType="VARCHAR" property="selfEvaluate" />
+    <result column="del_flag" jdbcType="CHAR" property="delFlag" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, dept_evaluate, conpany_evaluate, self_evaluate, del_flag, create_by, 
+    create_time, update_by, update_time, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_evaluate
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sys_evaluate
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.bs.bs_system.entity.SysEvaluate" useGeneratedKeys="true">
+    insert into sys_evaluate (user_id, dept_evaluate, conpany_evaluate, 
+      self_evaluate, del_flag, create_by, 
+      create_time, update_by, update_time, 
+      remark)
+    values (#{userId,jdbcType=BIGINT}, #{deptEvaluate,jdbcType=VARCHAR}, #{conpanyEvaluate,jdbcType=VARCHAR}, 
+      #{selfEvaluate,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}, #{createBy,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.bs.bs_system.entity.SysEvaluate" useGeneratedKeys="true">
+    insert into sys_evaluate
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="deptEvaluate != null">
+        dept_evaluate,
+      </if>
+      <if test="conpanyEvaluate != null">
+        conpany_evaluate,
+      </if>
+      <if test="selfEvaluate != null">
+        self_evaluate,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="deptEvaluate != null">
+        #{deptEvaluate,jdbcType=VARCHAR},
+      </if>
+      <if test="conpanyEvaluate != null">
+        #{conpanyEvaluate,jdbcType=VARCHAR},
+      </if>
+      <if test="selfEvaluate != null">
+        #{selfEvaluate,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bs.bs_system.entity.SysEvaluate">
+    update sys_evaluate
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="deptEvaluate != null">
+        dept_evaluate = #{deptEvaluate,jdbcType=VARCHAR},
+      </if>
+      <if test="conpanyEvaluate != null">
+        conpany_evaluate = #{conpanyEvaluate,jdbcType=VARCHAR},
+      </if>
+      <if test="selfEvaluate != null">
+        self_evaluate = #{selfEvaluate,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bs.bs_system.entity.SysEvaluate">
+    update sys_evaluate
+    set user_id = #{userId,jdbcType=BIGINT},
+      dept_evaluate = #{deptEvaluate,jdbcType=VARCHAR},
+      conpany_evaluate = #{conpanyEvaluate,jdbcType=VARCHAR},
+      self_evaluate = #{selfEvaluate,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

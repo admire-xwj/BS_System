@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bs.bs_system.mapper.SysPayMapper">
+  <resultMap id="BaseResultMap" type="com.bs.bs_system.entity.SysPay">
+    <id column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="base_pay" jdbcType="DOUBLE" property="basePay" />
+    <result column="bonus" jdbcType="DOUBLE" property="bonus" />
+    <result column="five_insur" jdbcType="DOUBLE" property="fiveInsur" />
+    <result column="other_deduc" jdbcType="DOUBLE" property="otherDeduc" />
+    <result column="other_wages" jdbcType="DOUBLE" property="otherWages" />
+    <result column="order_num" jdbcType="INTEGER" property="orderNum" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    user_id, base_pay, bonus, five_insur, other_deduc, other_wages, order_num, create_by, 
+    create_time, update_by, update_time, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_pay
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sys_pay
+    where user_id = #{userId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="user_id" keyProperty="userId" parameterType="com.bs.bs_system.entity.SysPay" useGeneratedKeys="true">
+    insert into sys_pay (base_pay, bonus, five_insur, 
+      other_deduc, other_wages, order_num, 
+      create_by, create_time, update_by, 
+      update_time, remark)
+    values (#{basePay,jdbcType=DOUBLE}, #{bonus,jdbcType=DOUBLE}, #{fiveInsur,jdbcType=DOUBLE}, 
+      #{otherDeduc,jdbcType=DOUBLE}, #{otherWages,jdbcType=DOUBLE}, #{orderNum,jdbcType=INTEGER}, 
+      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="user_id" keyProperty="userId" parameterType="com.bs.bs_system.entity.SysPay" useGeneratedKeys="true">
+    insert into sys_pay
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="basePay != null">
+        base_pay,
+      </if>
+      <if test="bonus != null">
+        bonus,
+      </if>
+      <if test="fiveInsur != null">
+        five_insur,
+      </if>
+      <if test="otherDeduc != null">
+        other_deduc,
+      </if>
+      <if test="otherWages != null">
+        other_wages,
+      </if>
+      <if test="orderNum != null">
+        order_num,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="basePay != null">
+        #{basePay,jdbcType=DOUBLE},
+      </if>
+      <if test="bonus != null">
+        #{bonus,jdbcType=DOUBLE},
+      </if>
+      <if test="fiveInsur != null">
+        #{fiveInsur,jdbcType=DOUBLE},
+      </if>
+      <if test="otherDeduc != null">
+        #{otherDeduc,jdbcType=DOUBLE},
+      </if>
+      <if test="otherWages != null">
+        #{otherWages,jdbcType=DOUBLE},
+      </if>
+      <if test="orderNum != null">
+        #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bs.bs_system.entity.SysPay">
+    update sys_pay
+    <set>
+      <if test="basePay != null">
+        base_pay = #{basePay,jdbcType=DOUBLE},
+      </if>
+      <if test="bonus != null">
+        bonus = #{bonus,jdbcType=DOUBLE},
+      </if>
+      <if test="fiveInsur != null">
+        five_insur = #{fiveInsur,jdbcType=DOUBLE},
+      </if>
+      <if test="otherDeduc != null">
+        other_deduc = #{otherDeduc,jdbcType=DOUBLE},
+      </if>
+      <if test="otherWages != null">
+        other_wages = #{otherWages,jdbcType=DOUBLE},
+      </if>
+      <if test="orderNum != null">
+        order_num = #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bs.bs_system.entity.SysPay">
+    update sys_pay
+    set base_pay = #{basePay,jdbcType=DOUBLE},
+      bonus = #{bonus,jdbcType=DOUBLE},
+      five_insur = #{fiveInsur,jdbcType=DOUBLE},
+      other_deduc = #{otherDeduc,jdbcType=DOUBLE},
+      other_wages = #{otherWages,jdbcType=DOUBLE},
+      order_num = #{orderNum,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+</mapper>
