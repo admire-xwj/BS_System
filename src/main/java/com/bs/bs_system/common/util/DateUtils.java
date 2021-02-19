@@ -1,5 +1,7 @@
 package com.bs.bs_system.common.util;
 
+import org.springframework.stereotype.Component;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ import java.util.List;
  *
  * @author
  */
+@Component
 public class DateUtils {
 
     /**

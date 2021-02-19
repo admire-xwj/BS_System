@@ -178,19 +178,8 @@
         table.on('tool(currentTableFilter)', function (obj) {
             var data = obj.data;
             if (obj.event === 'download') {
-                var index = layer.href({
-                    title: '下载文件',
-                    type: 2,
-                    shade: 0.2,
-                    maxmin: true,
-                    shadeClose: true,
-                    area: ['100%', '100%'],
-                    content: 'E:\\IDEA\\IDEA_Work\\project3\\bs_system\\src\\main\\resources\\templates\\temp05-中意团险核心-任务调度计划清单.xlsx',
 
-                });
-                $(window).on("resize", function () {
-                    layer.full(index);
-                });
+              window.open("/system/downloadModel?fileName=" + data.fileName)
                 return false;
             } else if (obj.event === 'delete') {
                 layer.confirm('真的删除行么', function (index) {
