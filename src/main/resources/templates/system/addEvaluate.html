@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>留言评价</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<form class="layui-form layuimini-form" name="form" id="form">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">姓名</label>
+        <div class="layui-input-block">
+            <input type="text" name="userName" id="userName" lay-verify="required" lay-reqtext="姓名不能为空"
+                   placeholder="请输入姓名" class="layui-input"></div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">对公司评价</label>
+        <div class="layui-input-block">
+                                    <textarea name="conpanyEvaluate" id="conpanyEvaluate" placeholder="请输入"
+                                              class="layui-textarea"></textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">对部门评价:</label>
+        <div class="layui-input-block">
+                                    <textarea name="deptEvaluate" id="deptEvaluate" placeholder="请输入"
+                                              class="layui-textarea"></textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">个人评价:</label>
+        <div class="layui-input-block">
+                                    <textarea name="selfEvaluate" id="selfEvaluate" placeholder="请输入"
+                                              class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp注:</label>
+        <div class="layui-input-block">
+                                    <textarea name="remark" id="remark" placeholder="请输入"
+                                              class="layui-textarea"></textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认评价</button>
+        </div>
+    </div>
+
+</form>
+<script src="../lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script src="../lib/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script>
+<script src="../lib/jquery-3.4.1/jquery.params.js" charset="utf-8"></script>
+<script src="../js/common.js" charset="utf-8"></script>
+<script>
+
+    layui.use(['form'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            treeSelect = layui.treeSelect,
+            $ = layui.$;
+
+
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            $.ajax({
+                url: "/system/insertSysEvaluateInfo",
+                type: "post",
+                data: $("#form").serialize(),
+                // dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+                success: function (res) {
+                    if (res.code == "0") {
+                        var index = layer.msg(res.msg, {icon: 1, time: 1000}, function () {
+                            // 关闭弹出层
+                            layer.close(index);
+                            window.parent.location.reload();
+                            var iframeIndex = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(iframeIndex);
+                        })
+                    } else {
+                        layer.msg(res.msg, {icon: 2,})
+                    }
+
+                }
+            });
+            return false;
+        });
+
+    })
+    ;
+</script>
+</body>
+</html>

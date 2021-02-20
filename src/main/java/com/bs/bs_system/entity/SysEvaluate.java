@@ -1,8 +1,10 @@
 package com.bs.bs_system.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 
 /**
  * sys_evaluate
@@ -13,6 +15,7 @@ public class SysEvaluate implements Serializable {
     /**
      * id
      */
+    @TableId(value = "id")
     private Long id;
 
     /**

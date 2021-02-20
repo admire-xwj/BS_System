@@ -142,8 +142,8 @@
 
 
         $('.login-out').on("click", function () {
-            layer.msg('退出登录成功', function () {
-                window.location = 'page/login-3.html';
+            layer.msg('退出登录成功', {icon: 1, time: 200}, function () {
+                window.location = '/logout';
             });
         });
     });

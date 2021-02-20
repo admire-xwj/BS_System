@@ -46,7 +46,7 @@
         <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
 
         <script type="text/html" id="currentTableBar">
-            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除（未完善）</a>
+            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
         </script>
 
     </div>
@@ -60,7 +60,7 @@
 
         table.render({
             elem: '#currentTableId',
-            url: '/system/qrySysUserInfo',
+            url: '/system/qrySysEvaluateInfo',
             toolbar: '#toolbarDemo',
             defaultToolbar: ['filter', 'exports', 'print', {
                 title: '提示',
@@ -71,16 +71,14 @@
             cols: [
                 [
                     {type: "checkbox", width: 50},
-                    {field: 'userId', width: 80, title: 'ID', sort: true, align: "center"},
-                    {field: 'deptName', width: 100, title: '部门名称', align: "center"},
-                    {field: 'roleName', width: 100, title: '角色名称', align: "center"},
-                    {field: 'userName', width: 100, title: '用户名', align: "center"},
-                    {field: 'userType', width: 100, title: '用户类型', align: "center"},
-                    {field: 'email', title: '用户邮箱', minWidth: 150, align: "center"},
-                    {field: 'phonenumber', width: 130, title: '手机号码', align: "center"},
-                    {field: 'sex', width: 80, title: '性别', align: "center"},
-                    {field: 'status', width: 80, title: '状态', align: "center"},
-                    {field: 'loginDate', width: 135, title: '登录时间', sort: true, align: "center"},
+                    {field: 'id', width: 80, title: '编号', sort: true, align: "center"},
+                    {field: 'userName', width: 100, title: '用户姓名', align: "center"},
+                    {field: 'deptEvaluate', width: 150, title: '部门评价', align: "center"},
+                    {field: 'conpanyEvaluate', width: 150, title: '公司评价', align: "center"},
+                    {field: 'selfEvaluate', width: 150, title: '个人评价', align: "center"},
+                    {field: 'createBy', title: '创建者', minWidth: 100, align: "center"},
+                    {field: 'createTime', width: 150, title: '创建时间', align: "center"},
+                    {field: 'remark', width: 150, title: 'remark', align: "center"},
                     {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
                 ]
             ],
@@ -100,9 +98,6 @@
                 method: 'get',
                 where: { //设定异步数据接口的额外参数，任意设
                     userName: $("#username").val(),
-                    sex: $("#sex").val(),
-                    deptId: $("#deptname").val(),
-                    userType: $("#usertype").val()
                 },
                 page: {
                     curr: 1 //重新从第 1 页开始
@@ -117,25 +112,43 @@
             console.log(obj)
         });
 
+        /**
+         * toolbar监听事件
+         */
+        table.on('toolbar(currentTableFilter)', function (obj) {
+            if (obj.event === 'add') {  // 监听添加操作
+                var index = layer.open({
+                    title: '留言评价',
+                    type: 2,
+                    shade: 0.2,
+                    maxmin: true,
+                    shadeClose: true,
+                    area: ['100%', '100%'],
+                    content: 'addEvaluate.html',
+                });
+                $(window).on("resize", function () {
+                    layer.full(index);
+                });
+            }
+        });
+
+
         table.on('tool(currentTableFilter)', function (obj) {
             var data = obj.data;
 
             if (obj.event === 'delete') {
                 layer.confirm('真的删除行么', function (index) {
                     $.ajax({
-                        url: "/system/deleteSysuser", //接口
+                        url: "/system/deleteSysEvaluate", //接口
                         type: "post", //GET或POST
-                        data: JSON.stringify({userId: "1"}), //数据
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+                        data: {id: data.id}, //数据
                         success: function (res) {
                             if (res.code == "0") {
                                 layer.msg(res.msg, {icon: 1})
                             } else {
                                 layer.msg(res.msg, {icon: 2})
                             }
+                            table.reload('currentTableId');
                         } //回调成功方法
                     });
                     layer.close(index);

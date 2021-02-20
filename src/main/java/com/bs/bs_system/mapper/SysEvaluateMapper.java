@@ -1,8 +1,9 @@
 package com.bs.bs_system.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.bs.bs_system.entity.SysEvaluate;
 
-public interface SysEvaluateMapper {
+public interface SysEvaluateMapper extends BaseMapper<SysEvaluate> {
     int deleteByPrimaryKey(Long id);
 
     int insert(SysEvaluate record);
