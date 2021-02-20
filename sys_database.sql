@@ -11,7 +11,7 @@
  Target Server Version : 80018
  File Encoding         : 65001
 
- Date: 20/02/2021 22:34:16
+ Date: 20/02/2021 22:46:14
 */
 
 SET NAMES utf8mb4;
@@ -106,14 +106,14 @@ CREATE TABLE `sys_file`  (
 -- ----------------------------
 INSERT INTO `sys_file` VALUES (1, 'a.txt', 109, 1, '', '0', '0', 'admin', '2021-02-16 00:00:00', 'admin', '2021-02-17 00:00:00', '上传文件1');
 INSERT INTO `sys_file` VALUES (2, 'b.txt', 200, 2, '', '0', '0', 'admin', '2021-02-16 00:00:00', '', NULL, '上传文件2');
-INSERT INTO `sys_file` VALUES (2000, 'data.json', 104, NULL, 'E:\\IDEA\\IDEA_Work\\project3\\bs_system\\src\\main\\resources\\templates\\temp', '0', '0', 'admin', '2021-02-17 00:00:00', NULL, NULL, '111');
-INSERT INTO `sys_file` VALUES (2001, '统一身份认证SDK说明手册-支付宝V1.0.6.docx', 104, NULL, 'E:\\IDEA\\IDEA_Work\\project3\\bs_system\\src\\main\\resources\\templates\\temp', '0', '0', 'admin', '2021-02-17 00:00:00', NULL, NULL, '111');
-INSERT INTO `sys_file` VALUES (2002, 'LcinsuredMapper.xml', 104, NULL, 'E:\\IDEA\\IDEA_Work\\project3\\bs_system\\src\\main\\resources\\templates\\temp', '0', '0', 'admin', '2021-02-17 00:00:00', NULL, NULL, '222');
-INSERT INTO `sys_file` VALUES (2003, 'W020210126422674030313.xls', 202, NULL, 'E:\\IDEA\\IDEA_Work\\project3\\bs_system\\src\\main\\resources\\templates\\temp', '1', '0', 'admin', '2021-02-17 00:00:00', NULL, NULL, '3333');
-INSERT INTO `sys_file` VALUES (2004, '批处理清单.txt', 200, NULL, 'E:\\IDEA\\IDEA_Work\\project3\\bs_system\\src\\main\\resources\\templates\\temp', '0', '0', 'admin', '2021-02-17 00:00:00', NULL, NULL, '111');
-INSERT INTO `sys_file` VALUES (2005, 'GrpPaySendToBank.java', 105, NULL, 'E:\\IDEA\\IDEA_Work\\project3\\bs_system\\src\\main\\resources\\templates\\temp', '0', '0', 'admin', '2021-02-17 00:00:00', NULL, NULL, '3363');
-INSERT INTO `sys_file` VALUES (2006, 'jquery.params.js', 104, NULL, 'E:\\IDEA\\IDEA_Work\\project3\\bs_system\\src\\main\\resources\\templates\\temp', '1', '0', 'admin', '2021-02-17 00:00:00', NULL, NULL, '999');
-INSERT INTO `sys_file` VALUES (2007, '批处理清单.txt', 107, NULL, 'E:\\IDEA\\IDEA_Work\\project3\\bs_system\\src\\main\\resources\\templates\\temp', '1', '0', 'admin', '2021-02-17 00:00:00', NULL, NULL, '5555');
+INSERT INTO `sys_file` VALUES (2000, 'c.txt', 104, NULL, 'E:\\IDEA\\IDEA_Work\\project3\\bs_system\\src\\main\\resources\\templates\\temp', '0', '0', 'admin', '2021-02-17 00:00:00', NULL, NULL, '111');
+INSERT INTO `sys_file` VALUES (2001, 'd.txt', 104, NULL, 'E:\\IDEA\\IDEA_Work\\project3\\bs_system\\src\\main\\resources\\templates\\temp', '0', '0', 'admin', '2021-02-17 00:00:00', NULL, NULL, '111');
+INSERT INTO `sys_file` VALUES (2002, 'e.txt', 104, NULL, 'E:\\IDEA\\IDEA_Work\\project3\\bs_system\\src\\main\\resources\\templates\\temp', '0', '0', 'admin', '2021-02-17 00:00:00', NULL, NULL, '222');
+INSERT INTO `sys_file` VALUES (2003, 'f.txt', 202, NULL, 'E:\\IDEA\\IDEA_Work\\project3\\bs_system\\src\\main\\resources\\templates\\temp', '1', '0', 'admin', '2021-02-17 00:00:00', NULL, NULL, '3333');
+INSERT INTO `sys_file` VALUES (2004, 'g.txt', 200, NULL, 'E:\\IDEA\\IDEA_Work\\project3\\bs_system\\src\\main\\resources\\templates\\temp', '0', '0', 'admin', '2021-02-17 00:00:00', NULL, NULL, '111');
+INSERT INTO `sys_file` VALUES (2005, 'h.txt', 105, NULL, 'E:\\IDEA\\IDEA_Work\\project3\\bs_system\\src\\main\\resources\\templates\\temp', '0', '0', 'admin', '2021-02-17 00:00:00', NULL, NULL, '3363');
+INSERT INTO `sys_file` VALUES (2006, 'i.txt', 104, NULL, 'E:\\IDEA\\IDEA_Work\\project3\\bs_system\\src\\main\\resources\\templates\\temp', '1', '0', 'admin', '2021-02-17 00:00:00', NULL, NULL, '999');
+INSERT INTO `sys_file` VALUES (2007, 'j.txt', 107, NULL, 'E:\\IDEA\\IDEA_Work\\project3\\bs_system\\src\\main\\resources\\templates\\temp', '1', '0', 'admin', '2021-02-17 00:00:00', NULL, NULL, '5555');
 
 -- ----------------------------
 -- Table structure for sys_menu
