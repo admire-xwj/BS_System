@@ -12,6 +12,7 @@ import java.util.Map;
 @Configuration
 public class ShiroConfig {
 
+
     //ShiroFilterFactoryBean
     @Bean(name = "shiroFilter")
     public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier("securityManager") DefaultWebSecurityManager securityManager) {
@@ -29,6 +30,7 @@ public class ShiroConfig {
          */
 
         Map<String, String> filterMap = new LinkedHashMap<>();
+        filterMap.put("/", "authc");
         filterMap.put("/index", "authc");
         filterMap.put("system/*", "authc");
         bean.setFilterChainDefinitionMap(filterMap);

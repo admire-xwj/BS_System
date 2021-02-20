@@ -2,6 +2,7 @@ package com.bs.bs_system.common;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,6 +23,17 @@ public class PageController {
     @RequestMapping("/{url}")
     public String page(@PathVariable("url") String url) {
         return url;
+    }
+
+    @RequestMapping(value = "/")
+    public String homePage() {
+        return "login";
+    }
+
+    @RequestMapping("/index")
+    public String toIndex(String userName, Model model) {
+        model.addAttribute("loginName", userName);
+        return "index";
     }
 
     @RequestMapping("/system/{page}")

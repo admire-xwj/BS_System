@@ -40,15 +40,15 @@
         <div class="layui-col-xs12 layui-col-md3">
 
             <div class="layui-card top-panel">
-                <div class="layui-card-header">要展示的指标名称</div>
+                <div class="layui-card-header">人员信息</div>
                 <div class="layui-card-body">
                     <div class="layui-row layui-col-space5">
                         <div class="layui-col-xs9 layui-col-md9 top-panel-number">
-                            9,054,056
+                            6,054,55
                         </div>
                         <div class="layui-col-xs3 layui-col-md3 top-panel-tips">
-                            比昨天 <a style="color: #1aa094">▲0.12</a><br>
-                            比七日 <a style="color: #bd3004">▼0.06</a>
+                            迟到次数<a style="color: #1aa094">▲2.0</a><br>
+                            待办事宜<a style="color: #bd3004">▼8.0</a>
                         </div>
                     </div>
                 </div>
@@ -58,15 +58,15 @@
         <div class="layui-col-xs12 layui-col-md3">
 
             <div class="layui-card top-panel">
-                <div class="layui-card-header">要展示的指标名称</div>
+                <div class="layui-card-header">考勤信息</div>
                 <div class="layui-card-body">
                     <div class="layui-row layui-col-space5">
                         <div class="layui-col-xs9 layui-col-md9 top-panel-number">
-                            9,054,056
+                            8,102,337
                         </div>
                         <div class="layui-col-xs3 layui-col-md3 top-panel-tips">
-                            比昨天 <a style="color: #1aa094">▲0.12</a><br>
-                            比七日 <a style="color: #bd3004">▼0.06</a>
+                            迟到次数<a style="color: #1aa094">▲2.0</a><br>
+                            待办事宜<a style="color: #bd3004">▼6.0</a>
                         </div>
                     </div>
                 </div>
@@ -76,15 +76,15 @@
         <div class="layui-col-xs12 layui-col-md3">
 
             <div class="layui-card top-panel">
-                <div class="layui-card-header">要展示的指标名称</div>
+                <div class="layui-card-header">部门信息</div>
                 <div class="layui-card-body">
                     <div class="layui-row layui-col-space5">
                         <div class="layui-col-xs9 layui-col-md9 top-panel-number">
                             9,054,056
                         </div>
                         <div class="layui-col-xs3 layui-col-md3 top-panel-tips">
-                            比昨天 <a style="color: #1aa094">▲0.12</a><br>
-                            比七日 <a style="color: #bd3004">▼0.06</a>
+                            迟到次数<a style="color: #1aa094">▲2.0</a><br>
+                            待办事宜<a style="color: #bd3004">▼5.0</a>
                         </div>
                     </div>
                 </div>
@@ -94,11 +94,11 @@
         <div class="layui-col-xs12 layui-col-md3">
 
             <div class="layui-card top-panel">
-                <div class="layui-card-header">要展示的指标名称</div>
+                <div class="layui-card-header">档案信息</div>
                 <div class="layui-card-body">
                     <div class="layui-row layui-col-space5">
                         <div class="layui-col-xs9 layui-col-md9 top-panel-number">
-                            9,054,056
+                            10,55,666
                         </div>
                         <div class="layui-col-xs3 layui-col-md3 top-panel-tips">
                             比昨天 <a style="color: #1aa094">▲0.12</a><br>
@@ -120,17 +120,6 @@
         </div>
     </div>
 
-
-    <div class="layui-row layui-col-space15">
-        <div class="layui-col-xs12 layui-col-md6">
-            <div id="echarts-dataset" style="background-color:#ffffff;min-height:300px;padding: 10px"></div>
-        </div>
-        <div class="layui-col-xs12 layui-col-md6">
-            <div id="echarts-map" style="background-color:#ffffff;min-height:300px;padding: 10px"></div>
-        </div>
-    </div>
-
-
 </div>
 <!--</div>-->
 <script src="lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
@@ -148,7 +137,7 @@
 
         var optionRecords = {
             title: {
-                text: '指标名称-报表图'
+                text: '人事信息-报表图'
             },
             tooltip: {
                 trigger: 'axis',
@@ -160,7 +149,7 @@
                 }
             },
             legend: {
-                data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
+                data: ['部门信息', '档案信息', '员工信息', '角色信息', '搜索引擎']
             },
             toolbox: {
                 feature: {
@@ -187,36 +176,36 @@
             ],
             series: [
                 {
-                    name: '邮件营销',
+                    name: '部门信息',
                     type: 'line',
-                    stack: '总量',
+                    stack: '信息',
                     areaStyle: {},
                     data: [120, 132, 101, 134, 90, 230, 210]
                 },
                 {
-                    name: '联盟广告',
+                    name: '档案信息',
                     type: 'line',
                     areaStyle: {},
                     data: [220, 182, 191, 234, 290, 330, 310]
                 },
                 {
-                    name: '视频广告',
+                    name: '员工信息',
                     type: 'line',
-                    stack: '总量',
+                    stack: '信息',
                     areaStyle: {},
                     data: [150, 232, 201, 154, 190, 330, 410]
                 },
                 {
-                    name: '直接访问',
+                    name: '角色信息',
                     type: 'line',
-                    stack: '总量',
+                    stack: '信息',
                     areaStyle: {},
                     data: [320, 332, 301, 334, 390, 330, 320]
                 },
                 {
                     name: '搜索引擎',
                     type: 'line',
-                    stack: '总量',
+                    stack: '信息',
                     label: {
                         normal: {
                             show: true,
@@ -237,7 +226,7 @@
         var echartsPies = echarts.init(document.getElementById('echarts-pies'), 'walden');
         var optionPies = {
             title: {
-                text: '指标名称-玫瑰图',
+                text: '人事信息-玫瑰图',
                 left: 'center'
             },
             tooltip: {
@@ -247,20 +236,20 @@
             legend: {
                 orient: 'vertical',
                 left: 'left',
-                data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+                data: ['部门信息', '档案信息', '员工信息', '角色信息', '搜索引擎']
             },
             series: [
                 {
-                    name: '访问来源',
+                    name: '信息',
                     type: 'pie',
                     radius: '55%',
                     center: ['50%', '60%'],
                     roseType: 'radius',
                     data: [
-                        {value: 335, name: '直接访问'},
-                        {value: 310, name: '邮件营销'},
-                        {value: 234, name: '联盟广告'},
-                        {value: 135, name: '视频广告'},
+                        {value: 335, name: '部门信息'},
+                        {value: 310, name: '档案信息'},
+                        {value: 234, name: '员工信息'},
+                        {value: 135, name: '角色信息'},
                         {value: 368, name: '搜索引擎'}
                     ],
                     emphasis: {
@@ -274,87 +263,6 @@
             ]
         };
         echartsPies.setOption(optionPies);
-
-
-        /**
-         * 柱状图
-         */
-        var echartsDataset = echarts.init(document.getElementById('echarts-dataset'), 'walden');
-
-        var optionDataset = {
-            legend: {},
-            tooltip: {},
-            dataset: {
-                dimensions: ['product', '2015', '2016', '2017'],
-                source: [
-                    {product: 'Matcha Latte', '2015': 43.3, '2016': 85.8, '2017': 93.7},
-                    {product: 'Milk Tea', '2015': 83.1, '2016': 73.4, '2017': 55.1},
-                    {product: 'Cheese Cocoa', '2015': 86.4, '2016': 65.2, '2017': 82.5},
-                    {product: 'Walnut Brownie', '2015': 72.4, '2016': 53.9, '2017': 39.1}
-                ]
-            },
-            xAxis: {type: 'category'},
-            yAxis: {},
-            // Declare several bar series, each will be mapped
-            // to a column of dataset.source by default.
-            series: [
-                {type: 'bar'},
-                {type: 'bar'},
-                {type: 'bar'}
-            ]
-        };
-
-        echartsDataset.setOption(optionDataset);
-
-
-        /**
-         * 中国地图
-         */
-        var echartsMap = echarts.init(document.getElementById('echarts-map'), 'walden');
-
-
-        var optionMap = {
-            legend: {},
-            tooltip: {
-                trigger: 'axis',
-                showContent: false
-            },
-            dataset: {
-                source: [
-                    ['product', '2012', '2013', '2014', '2015', '2016', '2017'],
-                    ['Matcha Latte', 41.1, 30.4, 65.1, 53.3, 83.8, 98.7],
-                    ['Milk Tea', 86.5, 92.1, 85.7, 83.1, 73.4, 55.1],
-                    ['Cheese Cocoa', 24.1, 67.2, 79.5, 86.4, 65.2, 82.5],
-                    ['Walnut Brownie', 55.2, 67.1, 69.2, 72.4, 53.9, 39.1]
-                ]
-            },
-            xAxis: {type: 'category'},
-            yAxis: {gridIndex: 0},
-            grid: {top: '55%'},
-            series: [
-                {type: 'line', smooth: true, seriesLayoutBy: 'row'},
-                {type: 'line', smooth: true, seriesLayoutBy: 'row'},
-                {type: 'line', smooth: true, seriesLayoutBy: 'row'},
-                {type: 'line', smooth: true, seriesLayoutBy: 'row'},
-                {
-                    type: 'pie',
-                    id: 'pie',
-                    radius: '30%',
-                    center: ['50%', '25%'],
-                    label: {
-                        formatter: '{b}: {@2012} ({d}%)'
-                    },
-                    encode: {
-                        itemName: 'product',
-                        value: '2012',
-                        tooltip: '2012'
-                    }
-                }
-            ]
-        };
-
-        echartsMap.setOption(optionMap);
-
 
         // echarts 窗口缩放自适应
         window.onresize = function () {

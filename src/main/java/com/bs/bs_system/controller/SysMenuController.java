@@ -45,7 +45,7 @@ public class SysMenuController {
             //标题logo
             Map<String, Object> logoInfo = new HashMap<>();
             logoInfo.put("title", "人事管理系统");
-            logoInfo.put("image", "images/logo.png");
+            logoInfo.put("image", "images/logo1.png");
             logoInfo.put("href", "");
             //菜单
             List<Map<String, Object>> menuInfo = new ArrayList<>();

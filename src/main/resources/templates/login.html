@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>人事管理系统</title>
@@ -126,21 +126,15 @@
                 <div class="layui-form-item">
                     <label class="layui-icon layui-icon-username" for="username"></label>
                     <input type="text" name="username" id="username" lay-verify="required|account" placeholder="用户名或者邮箱"
-                           autocomplete="off" class="layui-input" value="admin">
+                           autocomplete="off" class="layui-input">
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-icon layui-icon-password" for="password"></label>
                     <input type="password" name="password" id="password" lay-verify="required|password" placeholder="密码"
-                           autocomplete="off" class="layui-input" value="123456">
+                           autocomplete="off" class="layui-input">
+                    <tip><p th:text="${msg}" style="color: red"></p></tip>
                 </div>
-                <div class="layui-form-item">
-                    <label class="layui-icon layui-icon-vercode" for="captcha"></label>
-                    <input type="text" name="captcha" id="captcha" lay-verify="required|captcha" placeholder="图形验证码"
-                           autocomplete="off" class="layui-input verification captcha" value="xszg">
-                    <div class="captcha-img">
-                        <img id="captchaPic" src="images/captcha.jpg">
-                    </div>
-                </div>
+
                 <div class="layui-form-item">
                     <input type="checkbox" name="rememberMe" value="true" lay-skin="primary" title="记住密码">
                 </div>
@@ -184,13 +178,8 @@
                 layer.msg('密码不能为空');
                 return false;
             }
-            if (data.captcha == '') {
-                layer.msg('验证码不能为空');
-                return false;
-            }
-            layer.msg('登录成功', {icon: 1, time: 500}, function () {
-                window.location = '/toLogin?userName=' + $("#username").val() + "&password=" + $("#password").val();
-            });
+
+            window.location = '/toLogin?userName=' + $("#username").val() + "&password=" + $("#password").val();
             return false;
         });
     });

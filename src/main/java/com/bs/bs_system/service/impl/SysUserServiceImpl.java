@@ -10,6 +10,9 @@ import com.bs.bs_system.mapper.SysUserMapper;
 import com.bs.bs_system.mapper.SysUserRoleMapper;
 import com.bs.bs_system.service.SysUserService;
 import com.bs.bs_system.vo.DataTableVo;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -94,6 +97,41 @@ public class SysUserServiceImpl implements SysUserService {
             dataTableVo.setData(mapList);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+
+        return dataTableVo;
+    }
+
+    @Override
+    public DataTableVo updateSysUserInfo(String oldPassword, String newPassword, String againPassword) {
+        DataTableVo dataTableVo = new DataTableVo();
+        Subject subject = SecurityUtils.getSubject();
+        Session session = subject.getSession();
+        String userName = (String) session.getAttribute("userName");
+        String password = (String) session.getAttribute("password");
+        if (!StringUtils.equals(oldPassword, password)) {
+            dataTableVo.setCode("1");
+            dataTableVo.setMsg("旧密码输入错误");
+            dataTableVo.setCount(0L);
+            dataTableVo.setData(null);
+            return dataTableVo;
+        }
+
+        QueryWrapper<SysUser> qw = new QueryWrapper<>();
+        qw.lambda().eq(SysUser::getLoginName, userName);
+        SysUser sysUser = sysUserMapper.selectOne(qw);
+        sysUser.setPassword(newPassword);
+        int row = sysUserMapper.updateByPrimaryKey(sysUser);
+        if (row == 1) {
+            dataTableVo.setCode("0");
+            dataTableVo.setMsg("修改成功");
+            dataTableVo.setCount(0L);
+            dataTableVo.setData(null);
+        } else {
+            dataTableVo.setCode("1");
+            dataTableVo.setMsg("修改失败");
+            dataTableVo.setCount(0L);
+            dataTableVo.setData(null);
         }
 
         return dataTableVo;

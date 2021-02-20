@@ -1,6 +1,5 @@
 package com.bs.bs_system.controller;
 
-import com.bs.bs_system.entity.SysUser;
 import com.bs.bs_system.service.SysUserService;
 import com.bs.bs_system.vo.DataTableVo;
 import lombok.extern.slf4j.Slf4j;
@@ -40,5 +39,14 @@ public class SysUserController {
         dataTableVo.setCode("0");
         dataTableVo.setMsg("ch");
         return dataTableVo;
+    }
+
+
+    @RequestMapping("/updateSysUserInfo")
+    public DataTableVo updateSysUserInfo(String oldPassword, String newPassword, String againPassword) {
+        log.info("更新密码");
+        DataTableVo dataTableVo = sysUserService.updateSysUserInfo(oldPassword, newPassword, againPassword);
+        return dataTableVo;
+
     }
 }

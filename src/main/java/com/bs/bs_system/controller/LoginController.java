@@ -33,15 +33,16 @@ public class LoginController {
         //登录
         try {
             subject.login(token);
+
         } catch (UnknownAccountException e) {
             model.addAttribute("msg", "用户名错误");
-            return "redirect:/login";
+            return "/login";
         } catch (IncorrectCredentialsException e) {
             model.addAttribute("msg", "密码错误");
-            return "redirect:/login";
+            return "/login";
         }
-        return "redirect:/index";
-
+        model.addAttribute("msg", "登录成功");
+        return "redirect:/index?userName=" + userName;
 
     }
 
